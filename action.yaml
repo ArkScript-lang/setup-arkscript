@@ -16,17 +16,17 @@ runs:
 
   steps:
     - name: Set GitHub Path
-      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+      run: |
+        echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+        echo "$PWD/.arkscript/" >> $GITHUB_PATH
+        echo "ARKSCRIPT_PATH=$PWD/.arkscript/lib/" >> $GITHUB_ENV
       shell: bash
       env:
         GITHUB_ACTION_PATH: ${{ github.action_path }}
 
     - name: Download ArkScript release
       shell: sh
-      run: |
-        download.sh "${{ inputs.version }}" "${{ inputs.os }}"
-        echo "$PWD/.arkscript/" >> $GITHUB_PATH
-        echo "ARKSCRIPT_PATH=$PWD/.arkscript/lib/" >> $GITHUB_ENV
+      run: download.sh "${{ inputs.version }}" "${{ inputs.os }}"
 
     - name: Download latest ArkScript stdlib
       if: ${{ inputs.stdlib_update }} != 'no'
