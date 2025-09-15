@@ -21,6 +21,7 @@ runs:
         echo "$PWD/.arkscript" >> $GITHUB_PATH
         echo "ARKSCRIPT_PATH=$PWD/.arkscript/lib" >> $GITHUB_ENV
         echo "LD_LIBRARY_PATH=$PWD/.arkscript" >> $GITHUB_ENV
+        echo "DYLD_LIBRARY_PATH=$PWD/.arkscript" >> $GITHUB_ENV
       shell: bash
       env:
         GITHUB_ACTION_PATH: ${{ github.action_path }}
