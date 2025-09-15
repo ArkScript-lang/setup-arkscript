@@ -12,7 +12,7 @@ concurrency:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
-    name: "Test on ${{ matrix.os }} with ArkScript ${{ matrix.version }}, stdlib update: ${{ matrix.stdlib_update }}"
+    name: "${{ matrix.os }}, ArkScript ${{ matrix.version }}, stdlib update: ${{ matrix.stdlib_update }}"
 
     strategy:
       fail-fast: false
