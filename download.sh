@@ -38,5 +38,5 @@ curl "$ASSET_PATH" -O -J -L
 mkdir -p .arkscript
 unzip -oq "${ASSET}.zip" -d .arkscript
 rm "${ASSET}.zip"
-chmod +x ./.arkscript/arkscript*
+chmod +x ./.arkscript/arkscript* ./.arkscript/*ArkReactor*
 

@@ -18,8 +18,9 @@ runs:
     - name: Set GitHub Path
       run: |
         echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
-        echo "$PWD/.arkscript/" >> $GITHUB_PATH
-        echo "ARKSCRIPT_PATH=$PWD/.arkscript/lib/" >> $GITHUB_ENV
+        echo "$PWD/.arkscript" >> $GITHUB_PATH
+        echo "ARKSCRIPT_PATH=$PWD/.arkscript/lib" >> $GITHUB_ENV
+        echo "LD_LIBRARY_PATH=$PWD/.arkscript" >> $GITHUB_ENV
       shell: bash
       env:
         GITHUB_ACTION_PATH: ${{ github.action_path }}
