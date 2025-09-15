@@ -31,7 +31,7 @@ if [[ $(echo -ne "$API_OUTPUT" | grep "status.*404") != "" ]]; then
 fi
 
 ASSET_PATH=$(echo -ne "$API_OUTPUT" | grep "browser_download_url.*${ASSET}.zip" | cut -d : -f 2,3 | tr -d \" | tr -d " ")
-wget -q "$ASSET_PATH"
+curl -o "${ASSET}.zip" "$ASSET_PATH"
 
 mkdir -p .arkscript
 unzip -oq "${ASSET}.zip" -d .arkscript
