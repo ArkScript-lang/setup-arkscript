@@ -1,0 +1,37 @@
+name: "Testing ArkScript"
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    name: "Test on ${{ matrix.os }} with ArkScript ${{ matrix.version }}, stdlib update: ${{ matrix.stdlib_update }}"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-latest, macos-14]
+        version: [latest, v4.0.0, v4.0.0-18]
+        stdlib_update: [yes, no]
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup ArkScript
+        uses: ArkScript-lang/setup-arkscript@master
+        with:
+          os: ${{ matrix.os }}
+          version: ${{ matrix.version }}
+          stdlib_update: ${{ matrix.stdlib_update }}
+
+      - name: Run code
+        shell: bash
+        run: arkscript -c '(print "hello world!")'
+

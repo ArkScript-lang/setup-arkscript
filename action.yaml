@@ -1,0 +1,38 @@
+---
+name: 'Download ArkScript release and configure'
+inputs:
+  version:
+    description: 'ArkScript version to install'
+    default: 'latest'
+  os:
+    description: 'Operating system ArkScript will be running on'
+    default: 'linux'
+  stdlib_update:
+    description: 'If the ArkScript stdlib needs to be updated to the latest version'
+    default: 'no'
+
+runs:
+  using: 'composite'
+
+  steps:
+    - name: Set GitHub Path
+      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+      shell: bash
+      env:
+        GITHUB_ACTION_PATH: ${{ github.action_path }}
+
+    - name: Download ArkScript release
+      shell: sh
+      run: |
+        download.sh "${{ inputs.version }}" "${{ inputs.os }}"
+        echo "$PWD/.arkscript/" >> $GITHUB_PATH
+        echo "ARKSCRIPT_PATH=$PWD/.arkscript/lib/" >> $GITHUB_ENV
+
+    - name: Download latest ArkScript stdlib
+      if: ${{ inputs.stdlib_update }} != 'no'
+      shell: bash
+      run: download-stdlib.sh
+
+    - name: Test install
+      shell: bash
+      run: arkscript --version

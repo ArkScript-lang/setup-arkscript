@@ -1,0 +1,4 @@
+*.arkc
+__arkscript__/
+.DS_Store
+
