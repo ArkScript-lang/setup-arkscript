@@ -33,5 +33,5 @@ jobs:
 
       - name: Run code
         shell: bash
-        run: arkscript -c '(print "hello world!")'
+        run: arkscript --eval '(print "hello world!")'
 
