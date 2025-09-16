@@ -29,11 +29,15 @@ runs:
     - name: Download ArkScript release
       shell: sh
       run: download.sh "${{ inputs.version }}" "${{ inputs.os }}"
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
 
     - name: Download latest ArkScript stdlib
       if: ${{ inputs.stdlib_update }} != 'no'
       shell: bash
       run: download-stdlib.sh
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
 
     - name: Test install
       shell: bash

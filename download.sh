@@ -26,14 +26,14 @@ if [[ "$VERSION" != "latest" ]]; then
   URL="https://api.github.com/repos/ArkScript-lang/Ark/releases/tags/$VERSION"
 fi
 
-API_OUTPUT=$(curl -s "$URL")
+API_OUTPUT=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "$URL")
 if [[ $(echo -ne "$API_OUTPUT" | grep "status.*404") != "" ]]; then
   echo "Release '$VERSION' not found"
   exit 1
 fi
 
 ASSET_PATH=$(echo -ne "$API_OUTPUT" | grep "browser_download_url.*${ASSET}.zip" | cut -d : -f 2,3 | tr -d \" | tr -d " ")
-curl "$ASSET_PATH" -O -J -L
+curl -H "Authorization: token $GITHUB_TOKEN" "$ASSET_PATH" -O -J -L
 
 mkdir -p .arkscript
 unzip -oq "${ASSET}.zip" -d .arkscript
